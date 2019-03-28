@@ -126,4 +126,13 @@ class AccountsTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(User.objects.count(), 1)
         self.assertEqual(len(response.data['email']), 1)
+
+    def test_auth(self):
+        data={
+            'username' : 'testuser',
+            'password' : 'testpassword'
+        }
+        response=self.client.post(reverse('user_auth'),data,format='json')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(User.objects.count(), 1)
             
